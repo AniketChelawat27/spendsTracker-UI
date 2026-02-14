@@ -6,6 +6,7 @@ import { ActivityForm, type ActivityFormData } from './ActivityForm';
 import { ActivityCard } from './ActivityCard';
 import { Activity, Plus, ChevronRight } from 'lucide-react';
 import axios from 'axios';
+import { apiUrl } from '../api';
 
 const defaultFormData = (firstPerson: string): ActivityFormData => ({
   title: '',
@@ -42,7 +43,7 @@ export const OtherActivitiesSection: React.FC = () => {
     async (e: React.FormEvent) => {
       e.preventDefault();
       try {
-        await axios.post('/api/activities', {
+        await axios.post(apiUrl('/api/activities'), {
           ...formData,
           amount: Number(formData.amount),
           month: currentMonth,
@@ -61,7 +62,7 @@ export const OtherActivitiesSection: React.FC = () => {
     async (id: string) => {
       if (!window.confirm('Delete this activity?')) return;
       try {
-        await axios.delete(`/api/activities/${id}`);
+        await axios.delete(apiUrl(`/api/activities/${id}`));
         refreshData();
       } catch (err) {
         console.error('Error deleting activity:', err);

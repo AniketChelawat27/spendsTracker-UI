@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import axios from 'axios';
+import { apiUrl } from './api';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
@@ -78,8 +79,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, [getIdToken]);
 
   const signIn = useCallback(async (email: string, password: string) => {
-    const base = API_BASE || '';
-    const url = base ? `${base.replace(/\/$/, '')}/auth/login` : '/api/auth/login';
+    const url = apiUrl('/api/auth/login');
     const res = await axios.post<{ token: string; user: AuthUser }>(url, { email, password });
     const { token, user: u } = res.data;
     setStoredAuth({ token, user: u });
@@ -87,8 +87,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, []);
 
   const signUp = useCallback(async (email: string, password: string) => {
-    const base = API_BASE || '';
-    const url = base ? `${base.replace(/\/$/, '')}/auth/signup` : '/api/auth/signup';
+    const url = apiUrl('/api/auth/signup');
     const res = await axios.post<{ token: string; user: AuthUser }>(url, { email, password });
     const { token, user: u } = res.data;
     setStoredAuth({ token, user: u });

@@ -4,6 +4,7 @@ import { useMembers } from '../MembersContext';
 import { Panel, Button, Modal, Input, Select, TextArea } from './UI';
 import { ShoppingBag, Plus, Trash2, Filter, ChevronRight } from 'lucide-react';
 import axios from 'axios';
+import { apiUrl } from '../api';
 
 const categories = ['Food', 'Rent', 'Travel', 'Shopping', 'Bills', 'Medical', 'Other'];
 
@@ -68,7 +69,7 @@ export const ExpenseSection: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post('/api/expenses', {
+      await axios.post(apiUrl('/api/expenses'), {
         ...formData,
         amount: Number(formData.amount),
         month: currentMonth,
@@ -85,7 +86,7 @@ export const ExpenseSection: React.FC = () => {
   const handleDelete = async (id: string) => {
     if (!window.confirm('Delete this expense?')) return;
     try {
-      await axios.delete(`/api/expenses/${id}`);
+      await axios.delete(apiUrl(`/api/expenses/${id}`));
       refreshData();
     } catch (err) {
       console.error('Error deleting expense:', err);

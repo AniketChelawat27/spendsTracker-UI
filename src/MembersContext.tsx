@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import axios from 'axios';
+import { apiUrl } from './api';
 import type { Member } from './types';
 
 type MembersContextType = {
@@ -25,7 +26,7 @@ export const MembersProvider: React.FC<{ children: ReactNode }> = ({ children })
 
   const refreshMembers = useCallback(async () => {
     try {
-      const res = await axios.get<Member[]>('/api/members');
+      const res = await axios.get<Member[]>(apiUrl('/api/members'));
       setMembers(Array.isArray(res.data) ? res.data : []);
     } catch {
       setMembers([]);
@@ -41,12 +42,12 @@ export const MembersProvider: React.FC<{ children: ReactNode }> = ({ children })
   const addMember = useCallback(async (name: string) => {
     const trimmed = name.trim();
     if (!trimmed) return;
-    const res = await axios.post<Member>('/api/members', { name: trimmed });
+    const res = await axios.post<Member>(apiUrl('/api/members'), { name: trimmed });
     setMembers((prev) => [...prev, { id: res.data.id, name: trimmed }]);
   }, []);
 
   const removeMember = useCallback(async (id: string) => {
-    await axios.delete(`/api/members/${id}`);
+    await axios.delete(apiUrl(`/api/members/${id}`));
     setMembers((prev) => prev.filter((m) => m.id !== id));
   }, []);
 

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import type { ReactNode } from 'react';
 import axios from 'axios';
+import { apiUrl } from './api';
 import type { AppContextType, MonthData, ViewMode, ViewScope, Funds } from './types';
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -64,10 +65,10 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const refreshData = useCallback(async () => {
     try {
       if (viewMode === 'year') {
-        const response = await axios.get(`/api/data/year/${currentYear}`);
+        const response = await axios.get(apiUrl(`/api/data/year/${currentYear}`));
         setData(response.data);
       } else {
-        const response = await axios.get(`/api/data/${currentYear}/${currentMonth}`);
+        const response = await axios.get(apiUrl(`/api/data/${currentYear}/${currentMonth}`));
         setData(response.data);
       }
     } catch (error) {
@@ -77,7 +78,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   const refreshFunds = useCallback(async () => {
     try {
-      const response = await axios.get<Funds>('/api/funds');
+      const response = await axios.get<Funds>(apiUrl('/api/funds'));
       setFunds(response.data);
     } catch (error) {
       console.error('Error fetching funds:', error);
@@ -90,7 +91,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         emergency: updates.emergency ?? funds.emergency,
         vacation: updates.vacation ?? funds.vacation
       };
-      await axios.put('/api/funds', next);
+      await axios.put(apiUrl('/api/funds'), next);
       setFunds(next);
     } catch (error) {
       console.error('Error updating funds:', error);

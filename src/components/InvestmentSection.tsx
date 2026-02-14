@@ -4,6 +4,7 @@ import { useMembers } from '../MembersContext';
 import { Panel, Button, Modal, Input, Select, TextArea } from './UI';
 import { TrendingUp, Plus, Trash2, ChevronRight } from 'lucide-react';
 import axios from 'axios';
+import { apiUrl } from '../api';
 
 const investmentTypes = ['Mutual Fund', 'FD', 'Stocks', 'Gold', 'Crypto', 'Other'];
 
@@ -51,7 +52,7 @@ export const InvestmentSection: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post('/api/investments', {
+      await axios.post(apiUrl('/api/investments'), {
         ...formData,
         amount: Number(formData.amount),
         returnPercent: formData.returnPercent ? Number(formData.returnPercent) : null,
@@ -69,7 +70,7 @@ export const InvestmentSection: React.FC = () => {
   const handleDelete = async (id: string) => {
     if (!window.confirm('Delete this investment?')) return;
     try {
-      await axios.delete(`/api/investments/${id}`);
+      await axios.delete(apiUrl(`/api/investments/${id}`));
       refreshData();
     } catch (err) {
       console.error('Error deleting investment:', err);

@@ -4,6 +4,7 @@ import { useMembers } from '../MembersContext';
 import { Panel, Button, Modal, Input, Select, DataTable } from './UI';
 import { DollarSign, Plus, Trash2, ChevronRight } from 'lucide-react';
 import axios from 'axios';
+import { apiUrl } from '../api';
 
 const formatCurrency = (amount: number) =>
   new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(amount);
@@ -27,7 +28,7 @@ export const SalarySection: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post('/api/salaries', {
+      await axios.post(apiUrl('/api/salaries'), {
         ...formData,
         amount: Number(formData.amount),
         month: currentMonth,
@@ -44,7 +45,7 @@ export const SalarySection: React.FC = () => {
   const handleDelete = async (id: string) => {
     if (!window.confirm('Delete this salary entry?')) return;
     try {
-      await axios.delete(`/api/salaries/${id}`);
+      await axios.delete(apiUrl(`/api/salaries/${id}`));
       refreshData();
     } catch (err) {
       console.error('Error deleting salary:', err);
