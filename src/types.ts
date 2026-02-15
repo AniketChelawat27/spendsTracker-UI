@@ -29,6 +29,20 @@ export interface Investment {
   year: number;
   returnPercent?: number;
   notes?: string;
+  /** For Gold: price per gram (INR) at time of purchase */
+  pricePerGramAtPurchase?: number;
+}
+
+export interface GoldValuationItem extends Investment {
+  quantityGrams: number | null;
+  currentValue: number | null;
+}
+
+export interface GoldValuationResponse {
+  currentPricePerGram: number;
+  totalInvested: number;
+  totalCurrentValue: number | null;
+  items: GoldValuationItem[];
 }
 
 export interface OtherActivity {
