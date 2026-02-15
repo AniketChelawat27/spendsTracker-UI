@@ -10,6 +10,7 @@ import { InvestmentSection } from './components/InvestmentSection';
 import { OtherActivitiesSection } from './components/OtherActivitiesSection';
 import { MembersSection } from './components/MembersSection';
 import { SpendsSliderSection } from './components/SpendsSliderSection';
+import { SettingsSection } from './components/SettingsSection';
 import { AuthScreen } from './components/AuthScreen';
 import {
   LayoutDashboard,
@@ -25,10 +26,11 @@ import {
   Moon,
   Sun,
   LogOut,
+  Settings,
 } from 'lucide-react';
 import { useApp } from './AppContext';
 
-type Tab = 'dashboard' | 'salary' | 'expenses' | 'spends' | 'investments' | 'activities' | 'household';
+type Tab = 'dashboard' | 'salary' | 'expenses' | 'spends' | 'investments' | 'activities' | 'household' | 'settings';
 
 const tabs: { id: Tab; label: string; icon: React.ElementType }[] = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -38,6 +40,7 @@ const tabs: { id: Tab; label: string; icon: React.ElementType }[] = [
   { id: 'investments', label: 'Investments', icon: TrendingUp },
   { id: 'activities', label: 'Activities', icon: Activity },
   { id: 'household', label: 'Household', icon: Users },
+  { id: 'settings', label: 'Settings', icon: Settings },
 ];
 
 function NavContent({
@@ -176,6 +179,7 @@ function AppContent() {
           {activeTab === 'investments' && <InvestmentSection />}
           {activeTab === 'activities' && <OtherActivitiesSection />}
           {activeTab === 'household' && <MembersSection />}
+          {activeTab === 'settings' && <SettingsSection />}
         </main>
       </div>
     </div>
