@@ -134,7 +134,7 @@ export const Dashboard: React.FC = () => {
   }, [isYearView, data.salaries, data.expenses, data.investments, data.activities]);
 
   return (
-    <div className="space-y-10 sm:space-y-16 max-w-5xl">
+    <div className="space-y-10 sm:space-y-16 max-w-7xl">
       {/* Hero */}
       <section className="rounded-2xl sm:rounded-3xl bg-[#8c045c] p-6 sm:p-10 text-white shadow-float animate-slide-up">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">

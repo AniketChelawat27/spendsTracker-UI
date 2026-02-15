@@ -7,9 +7,7 @@ import { Dashboard } from './components/Dashboard';
 import { SalarySection } from './components/SalarySection';
 import { ExpenseSection } from './components/ExpenseSection';
 import { InvestmentSection } from './components/InvestmentSection';
-import { OtherActivitiesSection } from './components/OtherActivitiesSection';
 import { MembersSection } from './components/MembersSection';
-import { SpendsSliderSection } from './components/SpendsSliderSection';
 import { SettingsSection } from './components/SettingsSection';
 import { AuthScreen } from './components/AuthScreen';
 import {
@@ -17,12 +15,10 @@ import {
   DollarSign,
   ShoppingBag,
   TrendingUp,
-  Activity,
   Users,
   Loader2,
   ChevronRight,
   X,
-  LayoutGrid,
   Moon,
   Sun,
   LogOut,
@@ -30,15 +26,13 @@ import {
 } from 'lucide-react';
 import { useApp } from './AppContext';
 
-type Tab = 'dashboard' | 'salary' | 'expenses' | 'spends' | 'investments' | 'activities' | 'household' | 'settings';
+type Tab = 'dashboard' | 'salary' | 'expenses' | 'investments' | 'household' | 'settings';
 
 const tabs: { id: Tab; label: string; icon: React.ElementType }[] = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'salary', label: 'Salary', icon: DollarSign },
   { id: 'expenses', label: 'Expenses', icon: ShoppingBag },
-  { id: 'spends', label: 'Spends', icon: LayoutGrid },
   { id: 'investments', label: 'Investments', icon: TrendingUp },
-  { id: 'activities', label: 'Activities', icon: Activity },
   { id: 'household', label: 'Household', icon: Users },
   { id: 'settings', label: 'Settings', icon: Settings },
 ];
@@ -175,9 +169,7 @@ function AppContent() {
           {activeTab === 'dashboard' && <Dashboard />}
           {activeTab === 'salary' && <SalarySection />}
           {activeTab === 'expenses' && <ExpenseSection />}
-          {activeTab === 'spends' && <SpendsSliderSection />}
           {activeTab === 'investments' && <InvestmentSection />}
-          {activeTab === 'activities' && <OtherActivitiesSection />}
           {activeTab === 'household' && <MembersSection />}
           {activeTab === 'settings' && <SettingsSection />}
         </main>
