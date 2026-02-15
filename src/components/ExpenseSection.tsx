@@ -146,29 +146,56 @@ export const ExpenseSection: React.FC = () => {
               <Button onClick={() => setIsModalOpen(true)}><Plus className="w-5 h-5" /> Add expense</Button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredExpenses.map((exp) => (
-                <div key={exp.id} className={`rounded-2xl sm:rounded-3xl ${EXPENSE_CARD_BG[exp.category] || EXPENSE_CARD_BG.Other} p-5 shadow-float hover:shadow-float-lg transition-all duration-200 group`}>
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex items-center gap-2 min-w-0">
-                      <span className="text-2xl flex-shrink-0">{getCategoryIcon[exp.category] || '📦'}</span>
-                      <div className="min-w-0">
-                        <h3 className="font-bold text-white truncate">{exp.title}</h3>
-                        <span className="text-xs font-medium text-white/80">{exp.category}</span>
-                      </div>
-                    </div>
-                    <Button variant="ghost" size="sm" onClick={() => handleDelete(exp.id!)} className="opacity-0 group-hover:opacity-100 transition-opacity text-white hover:bg-white/20 flex-shrink-0">
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  </div>
-                  <p className="text-xl font-bold text-white">{formatCurrency(exp.amount)}</p>
-                  <div className="flex items-center justify-between text-sm mt-2 text-white/90">
-                    <span className="px-2 py-1 rounded-lg bg-white/20 font-medium">{exp.paidBy}</span>
-                    <span>{new Date(exp.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</span>
-                  </div>
-                  {exp.notes && <p className="text-sm text-white/80 mt-2 italic">{exp.notes}</p>}
-                </div>
-              ))}
+            <div className="overflow-x-auto rounded-2xl border border-border dark:border-border-dark overflow-hidden">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="bg-neutral-100 dark:bg-neutral-800/80 text-neutral-600 dark:text-neutral-400 text-sm">
+                    <th className="px-4 py-3 font-semibold">Title</th>
+                    <th className="px-4 py-3 font-semibold">Category</th>
+                    <th className="px-4 py-3 font-semibold">Amount</th>
+                    <th className="px-4 py-3 font-semibold">Paid by</th>
+                    <th className="px-4 py-3 font-semibold">Date</th>
+                    <th className="px-4 py-3 font-semibold">Notes</th>
+                    <th className="px-4 py-3 font-semibold w-12"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredExpenses.map((exp) => (
+                    <tr
+                      key={exp.id}
+                      className={`${EXPENSE_CARD_BG[exp.category] || EXPENSE_CARD_BG.Other} text-white hover:opacity-95 transition-opacity group border-b border-white/10 last:border-b-0`}
+                    >
+                      <td className="px-4 py-3 font-bold">{exp.title}</td>
+                      <td className="px-4 py-3">
+                        <span className="inline-flex items-center gap-2">
+                          <span>{getCategoryIcon[exp.category] || '📦'}</span>
+                          <span className="font-medium text-white/90">{exp.category}</span>
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 font-bold">{formatCurrency(exp.amount)}</td>
+                      <td className="px-4 py-3">
+                        <span className="px-2 py-1 rounded-lg bg-white/20 font-medium text-sm">{exp.paidBy}</span>
+                      </td>
+                      <td className="px-4 py-3 text-white/90 text-sm">
+                        {new Date(exp.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+                      </td>
+                      <td className="px-4 py-3 text-white/80 text-sm italic max-w-[180px] truncate" title={exp.notes}>
+                        {exp.notes || '—'}
+                      </td>
+                      <td className="px-4 py-3">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleDelete(exp.id!)}
+                          className="opacity-0 group-hover:opacity-100 transition-opacity text-white hover:bg-white/20"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           )}
           </Panel>
